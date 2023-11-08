@@ -1,0 +1,2 @@
+FROM rclone/rclone:1.64.0
+COPY ./conf/rclone.conf /config/rclone/rclone.conf
