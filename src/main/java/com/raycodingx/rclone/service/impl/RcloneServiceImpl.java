@@ -2,16 +2,29 @@ package com.raycodingx.rclone.service.impl;
 
 import com.raycodingx.rclone.domain.ShellResult;
 import com.raycodingx.rclone.service.IRcloneService;
-import org.springframework.beans.factory.annotation.Value;
+import com.raycodingx.rclone.utils.ShellUtil;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class RcloneServiceImpl implements IRcloneService {
-    @Value("rclone.workdir")
-    private String workdir;
 
     @Override
-    public ShellResult copy(String filepath) {
-        return null;
+    public ShellResult copy(String filepath,String workdir) {
+
+        String basename = filepath.substring(0,filepath.lastIndexOf("/") + 1);
+        String filename = filepath.substring(filepath.lastIndexOf("/") + 1);
+        String cmd = "docker run --rm -v " + workdir + ":/data:shared " +"--user $(id -u):$(id -g) yingzigene-rclone:v1 copy ftp:" + basename + " /data" +basename;
+        ShellResult res = ShellUtil.exec(cmd, "");
+        return res;
+    }
+
+    public static void main(String[] args) {
+        String workdir = "/data";
+        String filepath = "/tmp/rs/baidu/ray/1.txt";
+        String basename = filepath.substring(0,filepath.lastIndexOf("/") + 1);
+        String filename = filepath.substring(filepath.lastIndexOf("/") + 1);
+        String cmd = "docker run --rm -v " + workdir + ":/data:shared " +"--user $(id -u):$(id -g) yingzigene-rclone:v1 copy ftp:"+ basename + " /data" +basename;
+        System.out.println("dockerCommand: " + cmd);
     }
 }
