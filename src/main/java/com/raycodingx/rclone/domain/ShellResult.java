@@ -8,6 +8,8 @@ public class ShellResult {
 
     private String msg;
 
+    private String hostFilepath;
+
     public ShellResult() {
     }
 
@@ -16,11 +18,25 @@ public class ShellResult {
         this.cmd = cmd;
     }
 
+    public ShellResult(Boolean success, String cmd, String hostFilepath) {
+        this.success = success;
+        this.cmd = cmd;
+        this.hostFilepath = hostFilepath;
+    }
+
     public ShellResult(Boolean success, String cmd, String code, String msg) {
         this.success = success;
         this.cmd = cmd;
         this.code = code;
         this.msg = msg;
+    }
+
+    public String getHostFilepath() {
+        return hostFilepath;
+    }
+
+    public void setHostFilepath(String hostFilepath) {
+        this.hostFilepath = hostFilepath;
     }
 
     public Boolean getSuccess() {
@@ -62,6 +78,7 @@ public class ShellResult {
                 ", cmd='" + cmd + '\'' +
                 ", code='" + code + '\'' +
                 ", msg='" + msg + '\'' +
+                ", hostFilepath='" + hostFilepath + '\'' +
                 '}';
     }
 }
